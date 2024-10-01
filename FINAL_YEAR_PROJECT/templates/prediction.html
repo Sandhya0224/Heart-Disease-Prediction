@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction{% endblock title %}
+
+{% block body %}
+<body style="background-image: url('https://img.freepik.com/premium-photo/heart-checkup-cardiovascular-system-health-concept_361816-9924.jpg');background-repeat: no-repeat;background-size: cover;">
+
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-12">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Heart Disease Prediction</h1>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Check Your Heart Health!!</p>
+        <br><strong>
+          {% if request.method == 'POST' %}
+            {% if output == 1 %}
+            <h2 class="text-[50px] text-[#E72929]">This person is under the risk of heart disease<h2>
+            {% else %}
+            <h2 class="text-[50px] text-[#06D001]">This person is not under the risk of heart disease<h2>
+            {% endif %}
+          {% endif %}
+        </strong>
+      </div>
+      <form method="post",action="/prediction">
+        {% csrf_token %}
+      <div class="flex lg:w-2/3 w-full flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+        <a href="{% url 'logout' %}" class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg absolute top-0 right-0 h-11 ..." >logout</a>
+        <div class="relative flex-grow w-full">
+          <label for="age" class="leading-7 text-base text-black md:font-bold">Age</label>
+          <input type="text" id="age" name="age" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+          <label for="sex" class="leading-7 text-base text-black md:font-bold">Sex (1-male 0-female)</label>
+          <input type="text" id="sex" name="sex" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="chestPainTypes" class="leading-7 text-base text-black md:font-bold">Chest Pain types ( severity - 0 , 1 , 2 , 3 )</label>
+            <input type="text" id="chestPainTypes" name="chestPainTypes" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="restingBloodPressure" class="leading-7 text-base text-black md:font-bold">Resting Blood Pressure</label>
+            <input type="text" id="restingBloodPressure" name="restingBloodPressure" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="serumCholestrol" class="leading-7 text-base text-black md:font-bold">Serum Cholestoral in mg/dl</label>
+            <input type="text" id="serumCholestrol" name="serumCholestrol" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="fastingBloodSugar" class="leading-7 text-base text-black md:font-bold">Fasting Blood Sugar > 120 mg/dl ( 1- Yes , 0 - No )</label>
+            <input type="text" id="fastingBloodSugar" name="fastingBloodSugar" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="restingElectrocardiographicResults" class="leading-7 text-base text-black md:font-bold">Resting Electrocardiographic results( 0 - normal , 1 - abnormal )</label>
+            <input type="text" id="restingElectrocardiographicResults" name="restingElectrocardiographicResults" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="maximumHeartRateAchieved" class="leading-7 text-base text-black md:font-bold">Maximum Heart Rate achieved</label>
+            <input type="text" id="maximumHeartRateAchieved" name="maximumHeartRateAchieved" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="exerciseInducedAngina" class="leading-7 text-base text-black md:font-bold">Exercise Induced Angina ( 1- Yes , 0 - No )</label>
+            <input type="text" id="exerciseInducedAngina" name="exerciseInducedAngina" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="depressionInduced" class="leading-7 text-base text-black md:font-bold">old peak ( 0 mm - 6 mm )</label>
+            <input type="text" id="depressionInduced" name="depressionInduced" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="slope" class="leading-7 text-base text-black md:font-bold">Slope of the peak exercise ST segment( 0 - upsloping, 1 - flat , 2 - downsloping )</label>
+            <input type="text" id="slope" name="slope" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="flourosopy" class="leading-7 text-base text-black md:font-bold">Coronary Calcium Scan( 0 - normal , 1 - moderate , 2 - high )</label>
+            <input type="text" id="flourosopy" name="flourosopy" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div>
+        <div class="relative flex-grow w-full">
+            <label for="defectOrNot" class="leading-7 text-base text-black md:font-bold">Thalassemia: 1 = fixed defect; 2 = normal; 3 = reversable defect</label>
+            <input type="text" id="defectOrNot" name="defectOrNot" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  autocomplete="off">
+        </div> 
+        <button class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg" type="submit">Submit</button>
+    </form>
+      </div>
+    </div>
+  </section>
+  
+</body>
+{% endblock body %}
+
